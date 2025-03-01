@@ -13,7 +13,16 @@ public class Player {
      * TODO: removes and returns the tile in given index
      */
     public Tile getAndRemoveTile(int index) {
-        return null;
+        if (index < 0 || index >= numberOfTiles) {
+            return null;
+        }
+        Tile removed = playerTiles[index];
+        for (int i = index; i < numberOfTiles - 1; i++) {
+            playerTiles[i] = playerTiles[i + 1];
+        }
+        playerTiles[numberOfTiles - 1] = null;
+        numberOfTiles--;
+        return removed;
     }
 
     /*
@@ -21,8 +30,20 @@ public class Player {
      * should also update numberOfTiles accordingly.
      * make sure playerTiles are not more than 15 at any time
      */
-    public void addTile(Tile t) {
+     public void addTile(Tile t) {
+        if (numberOfTiles >= 15) return;
 
+        int insertIndex = 0;
+        while (insertIndex < numberOfTiles && playerTiles[insertIndex].compareTo(t) < 0) {
+            insertIndex++;
+        }
+
+        for (int i = numberOfTiles; i > insertIndex; i--) {
+            playerTiles[i] = playerTiles[i - 1];
+        }
+
+        playerTiles[insertIndex] = t;
+        numberOfTiles++;
     }
 
     /*
@@ -32,7 +53,27 @@ public class Player {
      * @return
      */
     public boolean isWinningHand() {
-        return false;
+        int[][] colorCounts = new int[8][4]; 
+        for (int i = 0; i < numberOfTiles; i++) {
+            Tile tile = playerTiles[i];
+            int value = tile.getValue();
+            int colorIndex = tile.colorNameToInt();
+            colorCounts[value][colorIndex]++;
+        }
+    
+        int chainCount = 0;
+        for (int value = 1; value <= 7; value++) {
+            int uniqueColors = 0;
+            for (int colorIndex = 0; colorIndex < 4; colorIndex++) {
+                if (colorCounts[value][colorIndex] > 0) {
+                    uniqueColors++;
+                }
+            }
+            if (uniqueColors >= 4) {
+                chainCount++;
+            }
+        }
+        return chainCount >= 3;
     }
 
     public int findPositionOfTile(Tile t) {
