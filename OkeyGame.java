@@ -58,8 +58,12 @@ public class OkeyGame {
      * it should return the toString method of the tile so that we can print what we picked
      */
     public String getLastDiscardedTile() {
-        return null;
+    if (lastDiscardedTile != null) {
+        return lastDiscardedTile.toString();
+    } else {
+        return "No tile has been discarded yet";
     }
+}
 
     /*
      * TODO: get the top tile from tiles array for the current player
