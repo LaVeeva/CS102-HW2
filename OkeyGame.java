@@ -60,8 +60,6 @@ public class OkeyGame {
     public String getLastDiscardedTile() {
     if (lastDiscardedTile != null) {
         return lastDiscardedTile.toString();
-    } else {
-        return "No tile has been discarded yet";
     }
 }
 
