@@ -120,7 +120,44 @@ public class OkeyGame {
      * the single tiles and tiles that contribute to the smallest chains.
      */
     public void discardTileForComputer() {
-
+        Player computer = players[currentPlayerIndex];
+        Tile[] hand = computer.getTiles();
+        int numTiles = computer.numberOfTiles;
+        int discardIndex = -1;
+        
+        for(int i = 0; i < numTiles; i++){
+            for(int x = i + 1; x < numTiles; x++){
+                if(hand[i].compareTo(hand[x]) == 0){
+                    discardIndex = i;
+                    break;
+                }
+            }
+        }
+        if(discardIndex != -1){
+            System.out.println("Player discards " + hand[discardIndex].toString());
+            discardTile(discardIndex);
+        }
+        else{
+            discardIndex = 0;
+            int[] chainNum = new int[numTiles];
+            for(int i = 0; i < numTiles; i++){
+                chainNum[i] == 0;
+            }
+            for(int i = 0; i < numTiles; i++){
+                for(int x = 0; x < numTiles; x++){
+                    if(hand[i].canFormChainWith(hand[x]){
+                        chainNum[i]++;
+                    }
+                }
+            }
+            for(int i = 0; i < numTiles; i++){
+                if(chainNum[discardIndex] > chainNum[i]){
+                    discardIndex = i;
+                }
+            }
+            System.out.println("Player discards " + hand[discardIndex].toString());
+            discardTile(discardIndex);
+        }
     }
 
     /*
