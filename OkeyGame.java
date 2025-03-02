@@ -1,3 +1,7 @@
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class OkeyGame {
 
     Player[] players;
@@ -33,8 +37,20 @@ public class OkeyGame {
      * this method assumes the tiles are already shuffled
      */
     public void distributeTilesToPlayers() {
-
-    }
+        for (int i = 1; i <= 15; i++)
+        {
+            players[0].addTile(tiles[112 - i]);
+            tiles[112 - i] = null;
+        }
+        for (int k = 0; k < 3; k++)
+        {
+            for (int i = 1; i <= 14; i++)
+            {
+                players[k + 1].addTile(tiles[97 - (14 * k) - i]);
+                tiles[97 - (14 * k) - i] = null;
+            }
+        }
+    } 
 
     /*
      * TODO: get the last discarded tile for the current player
@@ -51,14 +67,26 @@ public class OkeyGame {
      * it should return the toString method of the tile so that we can print what we picked
      */
     public String getTopTile() {
-        return null;
+        for (int i = 54; i >= 0; i--)
+        {
+            if (tiles[i] != null)
+            {
+                Tile topTile = tiles[i];
+                players[currentPlayerIndex].addTile(topTile);
+                tiles[i] = null;
+                return topTile.toString();
+            }
+        }
+        return "No more tiles to pull";
     }
 
     /*
      * TODO: should randomly shuffle the tiles array before game starts
      */
     public void shuffleTiles() {
-
+        List<Tile> tileList = Arrays.asList(tiles);
+        Collections.shuffle(tileList);
+        this.tiles = tileList.toArray(tiles);
     }
 
     /*
