@@ -141,11 +141,11 @@ public class OkeyGame {
             discardIndex = 0;
             int[] chainNum = new int[numTiles];
             for(int i = 0; i < numTiles; i++){
-                chainNum[i] == 0;
+                chainNum[i] = 0;
             }
             for(int i = 0; i < numTiles; i++){
                 for(int x = 0; x < numTiles; x++){
-                    if(hand[i].canFormChainWith(hand[x]){
+                    if(hand[i].canFormChainWith(hand[x])){
                         chainNum[i]++;
                     }
                 }
