@@ -18,52 +18,34 @@ public class Tile {
      * Compares tiles so that they can be added to the hands in order
      */
     public int compareTo(Tile t) {
-        if(colorNameToInt() < t.colorNameToInt()) {
-            return -1;
+
+        if (getValue() < t.getValue()) return -1;
+        else if (getValue() > t.getValue()) return 1;
+
+        else {
+            if (colorNameToInt() < t.colorNameToInt()) return -1;
+            else if (colorNameToInt() > t.colorNameToInt()) return 1;
+            else return 0;
         }
-        else if(colorNameToInt() > t.colorNameToInt()) {
-            return 1;
-        }
-        else{
-             if(getValue() < t.getValue()) {
-                return -1;
-            }
-            else if(getValue() > t.getValue()) {
-                return 1;
-            }
-            else{
-                return 0;
-            }
-        }
+        
     }
 
     public int colorNameToInt() {
-        if(color == 'Y') {
-            return 0;
-        }
-        else if(color == 'B') {
-            return 1;
-        }
-        else if(color == 'R') {
-            return 2;
-        }
-        else {
-            return 3;
-        }
+        return switch (color) {
+            case 'Y' -> 0;
+            case 'B' -> 1;
+            case 'R' -> 2;
+            default -> 3;
+        };
     }
 
     // determines if this tile can make a chain with the given tile
     public boolean canFormChainWith(Tile t) {
-
         // can make chain if same number but different color
-        if(t.getColor() != color && t.getValue() == value) {
-            return true;
-        } else {
-            return false;
-        }
-
+        return t.getColor() != color && t.getValue() == value;
     }
 
+    @Override
     public String toString() {
         return "" + value + color;
     }
